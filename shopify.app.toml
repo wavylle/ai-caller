@@ -3,7 +3,7 @@
 client_id = "f4d6b8ad1cdc40ba5ad2f445ad6594f0"
 name = "ai-caller"
 handle = "ai-caller"
-application_url = "https://travelers-institutions-register-cod.trycloudflare.com"
+application_url = "https://consistency-sport-math-repair.trycloudflare.com"
 embedded = true
 
 [build]
@@ -17,9 +17,9 @@ scopes = "write_products"
 
 [auth]
 redirect_urls = [
-  "https://travelers-institutions-register-cod.trycloudflare.com/auth/callback",
-  "https://travelers-institutions-register-cod.trycloudflare.com/auth/shopify/callback",
-  "https://travelers-institutions-register-cod.trycloudflare.com/api/auth/callback"
+  "https://consistency-sport-math-repair.trycloudflare.com/auth/callback",
+  "https://consistency-sport-math-repair.trycloudflare.com/auth/shopify/callback",
+  "https://consistency-sport-math-repair.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]

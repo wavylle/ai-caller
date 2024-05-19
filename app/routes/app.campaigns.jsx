@@ -12,17 +12,25 @@ import {
   Modal,
   TextField,
   Tooltip,
-  Badge
+  Badge,
+  LegacyCard,
+  EmptyState
 } from "@shopify/polaris";
 import { TitleBar } from "@shopify/app-bridge-react";
 import {json} from "@remix-run/node"
+
+// import prisma db
+import db from "../db.server"
+
 import {useLoaderData, Form} from "@remix-run/react"
 
 export async function loader() {
     // get data from database
 
     // currently loading from a local dictionary
-    let campaignsData = [{"campaignName": "New campaign", "campaignDescription": "Test description"}]
+    let campaignsData = await db.campaigns.findMany()
+
+    console.log("CAMPAIGNS DATA: ", campaignsData)
 
     return json(campaignsData)
 }
@@ -30,6 +38,15 @@ export async function loader() {
 export async function action({request}) {
     let campaignsData = await request.formData()
     campaignsData = Object.fromEntries(campaignsData)
+
+    // create new campaign record
+    let newCampaign = await db.campaigns.create({
+      data: {
+        campaignName: campaignsData.campaignName,
+        campaignDescription: campaignsData.campaignDescription
+      }
+    })
+
     return json({message: "New campaign created", data: campaignsData})
 }
 
@@ -47,15 +64,39 @@ export default function CampaignsPage() {
 
   const handleSubmit = async () => {
     // Handle form submission logic here, for now just simulate a successful submission
-    await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate async submission
+    // await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate async submission
+
+    setCampaignName('')
+    setcampaignDescription('')
     
     // Close the modal after successful submission
     setActive(false);
   };
 
-  const gridMarkup = campaignsData.map(
+  console.log(campaignsData)
+
+  let gridMarkup = ""
+  let emptyStateMarkup = ""
+
+  if (campaignsData.length <= 0) {
+    emptyStateMarkup = <LegacyCard sectioned>
+    <EmptyState
+      heading="No Campaigns Created"
+      action={{content: 'Create', onAction: handleModalChange}}
+      // secondaryAction={{
+      //   content: 'Learn more',
+      //   url: 'https://help.shopify.com',
+      // }}
+      image="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png"
+    >
+      <p>You haven't created any campaigns yet. Get started now and have AI talk to your customers.</p>
+    </EmptyState>
+  </LegacyCard>
+  }
+  else {
+  gridMarkup = campaignsData.map(
     (
-        {campaignName, campaignDescription},
+        {id, campaignName, campaignDescription, createdOn},
         index,
     ) => (
         <Card roundedAbove="sm">
@@ -64,7 +105,7 @@ export default function CampaignsPage() {
           <Text as="h6" variant="headingLg">
             📢 {campaignName}
           </Text><br />
-        <Text as="p" tone='subdued'>#123123 • 18 May, 2024</Text>
+        <Text as="p" tone='subdued'>#{id} • {new Date(createdOn).toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })}</Text>
       </Tooltip>
           {/* <Badge>Fulfilled</Badge> */}
           <BlockStack gap="200">
@@ -98,6 +139,7 @@ export default function CampaignsPage() {
       </Card>
     )
   )
+}
 
   return (
     <Page fullWidth title="Campaigns"
@@ -105,9 +147,12 @@ export default function CampaignsPage() {
       content: 'Create a campaign',
       onAction: handleModalChange,
     }}>
-      <InlineGrid gap="400" columns={3}>
-        {gridMarkup}
-      </InlineGrid>
+    <InlineGrid gap="400" columns={3}>
+      {gridMarkup}
+    </InlineGrid>
+
+    {emptyStateMarkup}
+
 
       <Modal
         open={active}
