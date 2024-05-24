@@ -30,3 +30,17 @@ model Campaigns {
   campaignDescription  String?
   createdOn            DateTime  @default(now())
 }
+
+model leadgroups {
+  id                   Int    @id @default(autoincrement())
+  groupName            String
+  groupDescription     String?
+  createdOn            DateTime  @default(now())
+}
+
+model uploadedfiles {
+  id                   Int    @id @default(autoincrement())
+  groupId              Int
+  fileName             String
+  createdOn            DateTime  @default(now()) 
+}

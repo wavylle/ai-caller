@@ -23,12 +23,15 @@ export default function App() {
         <Link to="/app" rel="home">
           Home
         </Link>
-        <Link to="/app/inboundcalls">Inbound Calls</Link>
+        <Link to="/app/leads">Leads</Link>
+        <Link to="/app/campaigns">Campaigns</Link>
+        <Link to="/app/pricing">Pricing</Link>
+        {/* <Link to="/app/inboundcalls">Inbound Calls</Link>
         <Link to="/app/outboundcalls">Outbound Calls</Link>
         <Link to="/app/abandonedcarts">Abandoned Carts</Link>
         <Link to="/app/campaigns">Campaigns</Link>
-        <Link to="/app/pricing">Pricing</Link>
-        <Link to="/app/settings">Settings</Link>
+        <Link to="/app/pricing">Pricing</Link> */}
+        {/* <Link to="/app/settings">Settings</Link> */}
       </NavMenu>
       <Outlet />
     </AppProvider>
