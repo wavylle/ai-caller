@@ -17,12 +17,12 @@ export async function action({ request }) {
         // Read the request body
         const bodyText = await request.text();
         const requestBody = JSON.parse(bodyText);
-        const { csvData, groupId } = requestBody;
+        const { csvData, groupId, fileName } = requestBody;
 
         // Define the directory and file path
         const directoryPath = path.join(process.cwd(), "uploads");
-        const fileName = `leads_${Date.now()}.csv`;
-        const filePath = path.join(directoryPath, fileName);
+        const fileNameFinal = `${fileName.replace(/\.[^.]+$/, '')}_${Date.now()}.csv`;
+        const filePath = path.join(directoryPath, fileNameFinal);
 
         // Ensure the directory exists
         if (!fs.existsSync(directoryPath)) {
@@ -38,7 +38,7 @@ export async function action({ request }) {
         const uploadedFile = await db.uploadedfiles.create({
           data: {
             groupId: parseInt(groupId),
-            fileName: fileName
+            fileName: fileNameFinal
           }
         });
 

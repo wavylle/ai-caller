@@ -66,6 +66,8 @@ export async function action({ request }) {
   return json({ message: "New directory created", data: leadGroupsData });
 }
 
+let fileName;
+
 function DropZoneExample({ setCSVData }) {
   const [file, setFile] = useState();
 
@@ -77,6 +79,7 @@ function DropZoneExample({ setCSVData }) {
         setFile(acceptedFiles[0]);
         setCSVData(csvData);
       };
+      fileName = acceptedFiles[0].name
       reader.readAsText(acceptedFiles[0]);
     },
     [setCSVData],
@@ -144,7 +147,7 @@ export default function UploadLeadsPage() {
     <Text variant="bodyMd" as="span">
       Preview Uploaded File
     </Text>
-    <Button variant="primary" onClick={() => handleSaveButtonClick(csvData)}>
+    <Button variant="primary" onClick={() => handleSaveButtonClick(csvData, fileName)}>
       Save
     </Button>
   </LegacyStack>
@@ -160,19 +163,20 @@ export default function UploadLeadsPage() {
     );
   };
 
-  const handleSaveButtonClick = async (data) => {
+  const handleSaveButtonClick = async (data, fileName) => {
     try {
+      console.log("File name: ", fileName)
       const response = await fetch('/api/uploadleads', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ csvData: data, groupId: groupId}), // Ensure data is properly stringified
+        body: JSON.stringify({ csvData: data, groupId: groupId, fileName: fileName}), // Ensure data is properly stringified
       });
   
       if (response.ok) {
         console.log('CSV data saved successfully.');
-        window.location.reload();
+        // window.location.reload();
       } else {
         const responseData = await response.json();
         console.error('Failed to save CSV data:', responseData.message);
@@ -199,6 +203,9 @@ export default function UploadLeadsPage() {
       <div style={{ marginTop: '20px' }}>
       <Text variant="headingLg" as="h5">
         Saved Files
+      </Text>
+      <Text as="p" tone='subdued'>
+        Refresh page to view updates
       </Text>
       </div>
       <div style={{ marginTop: '20px', marginBottom: '20px' }}>

@@ -1,4 +1,0 @@
-Customer ID,First Name,Last Name,Email,Accepts Email Marketing,Default Address Company,Default Address Address1,Default Address Address2,Default Address City,Default Address Province Code,Default Address Country Code,Default Address Zip,Default Address Phone,Phone,Accepts SMS Marketing,Total Spent,Total Orders,Note,Tax Exempt,Tags
-'6535953154188,Ayumu,Hirano,ayumu.hirano@example.com,no,,,,,,,,,'+16135550127,no,0.00,0,,no,
-'6535953186956,Russell,Winfield,russel.winfield@example.com,no,Company Name,105 Victoria St,,Toronto,,CA,M5C1N7,,'+16135550135,no,0.00,0,This customer is created with most available fields,no,VIP
-'6535953219724,Karine,Ruby,karine.ruby@example.com,no,,,,,,,,,'+16135550142,no,0.00,0,,no,

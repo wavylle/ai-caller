@@ -3,7 +3,7 @@
 client_id = "f4d6b8ad1cdc40ba5ad2f445ad6594f0"
 name = "ai-caller"
 handle = "ai-caller"
-application_url = "https://skating-indicate-helen-sony.trycloudflare.com"
+application_url = "https://teaching-hits-classic-experimental.trycloudflare.com"
 embedded = true
 
 [build]
@@ -17,9 +17,9 @@ scopes = "write_products read_customers read_inventory"
 
 [auth]
 redirect_urls = [
-  "https://skating-indicate-helen-sony.trycloudflare.com/auth/callback",
-  "https://skating-indicate-helen-sony.trycloudflare.com/auth/shopify/callback",
-  "https://skating-indicate-helen-sony.trycloudflare.com/api/auth/callback"
+  "https://teaching-hits-classic-experimental.trycloudflare.com/auth/callback",
+  "https://teaching-hits-classic-experimental.trycloudflare.com/auth/shopify/callback",
+  "https://teaching-hits-classic-experimental.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]
